@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VANTA | Web3 Growth & Community</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #0A0809;
+            --dark: #111010;
+            --card: #161414;
+            --gold: #C9A227;
+            --gold-light: #E2B93B;
+            --gold-dim: rgba(201, 162, 39, 0.12);
+            --white: #F5F0E8;
+            --muted: #888480;
+            --border: rgba(201, 162, 39, 0.18);
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 8, 9, 0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+        }
+        .nav-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 5px;
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 60px 80px;
+            position: relative;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            right: -80px;
+            width: 560px;
+            height: 560px;
+            background: radial-gradient(circle, rgba(201, 162, 39, 0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .hero-tag::before {
+            content: '';
+            display: inline-block;
+            width: 36px;
+            height: 1px;
+            background: var(--gold);
+        }
+        .hero-name {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(72px, 13vw, 130px);
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -3px;
+            line-height: 0.95;
+            margin-bottom: 28px;
+        }
+        .hero-name span { color: var(--gold); }
+        .hero-sub {
+            font-size: 17px;
+            color: var(--muted);
+            max-width: 500px;
+            margin-bottom: 48px;
+            line-height: 1.75;
+        }
+        .hero-sub strong { color: var(--white); font-weight: 500; }
+        .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--gold);
+            color: var(--black);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* STATS */
+        .stats-bar {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 44px 60px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 8px;
+        }
+
+        /* SECTION BASE */
+        section { padding: 100px 60px; }
+        .section-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-tag::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 1px;
+            background: var(--gold);
+        }
+        .section-title {
+            font-size: clamp(26px, 4vw, 42px);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 56px;
+            max-width: 560px;
+            line-height: 1.15;
+        }
+
+        /* EXPERIENCE */
+        .experience-grid { display: grid; gap: 2px; }
+        .exp-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 36px 40px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 24px;
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .exp-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0;
+            width: 3px; height: 100%;
+            background: var(--gold);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .exp-card:hover { border-color: var(--gold); background: rgba(201,162,39,0.02); }
+        .exp-card:hover::before { opacity: 1; }
+
+        .exp-project {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            color: var(--gold);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .exp-role {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+        .exp-desc {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.75;
+            max-width: 620px;
+        }
+        .exp-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+        .tag {
+            padding: 4px 12px;
+            border: 1px solid var(--border);
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .exp-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            white-space: nowrap;
+            padding-top: 4px;
+        }
+
+        /* SKILLS */
+        .skills-section { background: var(--card); }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+        .skill-card {
+            padding: 40px;
+            border: 1px solid var(--border);
+            background: var(--black);
+            transition: border-color 0.2s;
+        }
+        .skill-card:hover { border-color: var(--gold); }
+        .skill-icon { font-size: 26px; margin-bottom: 16px; }
+        .skill-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+        .skill-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+        /* TRACK RECORD */
+        .contest-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+        }
+        .contest-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 32px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: border-color 0.2s;
+        }
+        .contest-card:hover { border-color: var(--gold); }
+        .contest-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--gold-dim);
+            min-width: 52px;
+            line-height: 1;
+        }
+        .contest-info h3 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+        .contest-info p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+        /* CONTACT */
+        .contact-section { text-align: center; position: relative; overflow: hidden; }
+        .contact-section::before {
+            content: 'VANTA';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(80px, 18vw, 200px);
+            font-weight: 700;
+            color: rgba(201, 162, 39, 0.035);
+            pointer-events: none;
+            white-space: nowrap;
+            letter-spacing: -4px;
+        }
+        .contact-section .section-tag { justify-content: center; }
+        .contact-section .section-title { margin: 0 auto 16px; }
+        .contact-sub {
+            font-size: 15px;
+            color: var(--muted);
+            margin-bottom: 40px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .contact-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 15px;
+            color: var(--gold);
+            letter-spacing: 4px;
+        }
+        .footer-copy { font-size: 12px; color: var(--muted); }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+            .hero { padding: 100px 20px 60px; }
+            .stats-bar { padding: 32px 20px; grid-template-columns: repeat(2,1fr); gap: 24px; }
+            section { padding: 70px 20px; }
+            .exp-card { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .contest-list { grid-template-columns: 1fr; }
+            footer { padding: 24px 20px; flex-direction: column; gap: 10px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="#" class="nav-logo">VANTA</a>
+    <ul class="nav-links">
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#record">Track Record</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <p class="hero-tag">Web3 Growth & Community</p>
+    <h1 class="hero-name">VAN<span>TA</span></h1>
+    <p class="hero-sub">
+        <strong>Brand Ambassador. Community Manager. Growth Strategist.</strong><br>
+        3+ years building Web3 communities, driving token growth, and crafting content that converts — across RWA, DeFi, NFT, and memecoin ecosystems.
+    </p>
+    <div class="hero-cta">
+        <a href="https://x.com/vanta_xbt" target="_blank" class="btn-primary">↗ @vanta_xbt on X</a>
+        <a href="#experience" class="btn-outline">View Work</a>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+    <div class="stat-item">
+        <span class="stat-number">3+</span>
+        <span class="stat-label">Years Active</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-number">500+</span>
+        <span class="stat-label">Contest Entries</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-number">$4M+</span>
+        <span class="stat-label">Market Cap Driven</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-number">5+</span>
+        <span class="stat-label">Projects Represented</span>
+    </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <p class="section-tag">Experience</p>
+    <h2 class="section-title">Projects I've Built For</h2>
+    <div class="experience-grid">
+
+        <div class="exp-card">
+            <div>
+                <p class="exp-project">BlackDuck RWA · $BD</p>
+                <h3 class="exp-role">Brand Ambassador</h3>
+                <p class="exp-desc">
+                    Drove $BD token to a $4M+ market cap through sustained shilling, X Spaces activations, and community engagement campaigns. Built narrative momentum around the RWA thesis and broadened BlackDuck's reach across the Web3 space. Appointed after winning multiple internal thread and meme contests.
+                </p>
+                <div class="exp-tags">
+                    <span class="tag">RWA</span>
+                    <span class="tag">X Spaces</span>
+                    <span class="tag">Thread Writing</span>
+                    <span class="tag">Meme Direction</span>
+                    <span class="tag">Token Growth</span>
+                </div>
+            </div>
+            <span class="exp-date">Current</span>
+        </div>
+
+        <div class="exp-card">
+            <div>
+                <p class="exp-project">Alpha Hut</p>
+                <h3 class="exp-role">Community Manager & Collab Manager</h3>
+                <p class="exp-desc">
+                    Managed operations for a 1,000+ member community — overseeing day-to-day affairs, whitelist distribution, and inter-project collaborations. Maintained engagement health and brokered external partnerships with other Web3 teams and projects.
+                </p>
+                <div class="exp-tags">
+                    <span class="tag">Community Ops</span>
+                    <span class="tag">Whitelist Mgmt</span>
+                    <span class="tag">Collab Brokering</span>
+                    <span class="tag">Moderation</span>
+                </div>
+            </div>
+            <span class="exp-date">Past</span>
+        </div>
+
+        <div class="exp-card">
+            <div>
+                <p class="exp-project">FFG Coin</p>
+                <h3 class="exp-role">Brand Ambassador & Contest Winner</h3>
+                <p class="exp-desc">
+                    Served as Brand Ambassador while earning early recognition through a thread contest win — producing high-performing written content that expanded the project's organic reach and community visibility.
+                </p>
+                <div class="exp-tags">
+                    <span class="tag">Ambassadorship</span>
+                    <span class="tag">Thread Writing</span>
+                    <span class="tag">Content Strategy</span>
+                </div>
+            </div>
+            <span class="exp-date">Past</span>
+        </div>
+
+        <div class="exp-card">
+            <div>
+                <p class="exp-project">Mace_gg · Astrena AI · Others</p>
+                <h3 class="exp-role">Brand Ambassador</h3>
+                <p class="exp-desc">
+                    Represented multiple projects across gaming, AI, and DeFi verticals — handling social presence, community growth, and campaign execution tailored to each project's unique positioning and audience.
+                </p>
+                <div class="exp-tags">
+                    <span class="tag">Gaming</span>
+                    <span class="tag">AI Projects</span>
+                    <span class="tag">DeFi</span>
+                    <span class="tag">Growth</span>
+                </div>
+            </div>
+            <span class="exp-date">Past</span>
+        </div>
+
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+    <p class="section-tag">Capabilities</p>
+    <h2 class="section-title">What I Bring to a Project</h2>
+    <div class="skills-grid">
+        <div class="skill-card">
+            <div class="skill-icon">🏗️</div>
+            <h3 class="skill-title">Community Building</h3>
+            <p class="skill-desc">Moderation, whitelist ops, member retention, collab brokering. From 0 to 1,000+ and beyond.</p>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">📣</div>
+            <h3 class="skill-title">Brand Ambassadorship</h3>
+            <p class="skill-desc">Consistent, on-brand shilling across X — Spaces hosting, thread campaigns, narrative framing for token growth.</p>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">✍️</div>
+            <h3 class="skill-title">Thread & Content Writing</h3>
+            <p class="skill-desc">Contest-winning threads and marketing copy built to go viral — not just look good.</p>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">🎨</div>
+            <h3 class="skill-title">Meme & Creative Direction</h3>
+            <p class="skill-desc">Graphic cards, meme concepts, video prompts — character-driven, minimal text, high impact.</p>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">📈</div>
+            <h3 class="skill-title">Token Growth Strategy</h3>
+            <p class="skill-desc">Track record of driving market cap growth through coordinated community and content campaigns.</p>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">🌍</div>
+            <h3 class="skill-title">MENA & Africa Reach</h3>
+            <p class="skill-desc">Arabic proficiency + Lagos network — strategic access to underserved, high-growth crypto markets.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TRACK RECORD -->
+<section id="record">
+    <p class="section-tag">Track Record</p>
+    <h2 class="section-title">Contest Wins & Milestones</h2>
+    <div class="contest-list">
+        <div class="contest-card">
+            <span class="contest-num">01</span>
+            <div class="contest-info">
+                <h3>BlackDuck RWA — Multiple Wins</h3>
+                <p>Won multiple meme and thread contests before being appointed official $BD Brand Ambassador.</p>
+            </div>
+        </div>
+        <div class="contest-card">
+            <span class="contest-num">02</span>
+            <div class="contest-info">
+                <h3>FFG Coin — Thread Contest Win</h3>
+                <p>Produced the winning thread in FFG's community writing contest. Secured ambassador role from this.</p>
+            </div>
+        </div>
+        <div class="contest-card">
+            <span class="contest-num">03</span>
+            <div class="contest-info">
+                <h3>$RANDO Community Contest</h3>
+                <p>9-tweet marketing thread with custom graphic cards and original video meme concept for Solana memecoin contest.</p>
+            </div>
+        </div>
+        <div class="contest-card">
+            <span class="contest-num">04</span>
+            <div class="contest-info">
+                <h3>Hero of Valdir — NFT Contest</h3>
+                <p>Developed a full Demon-race character brief with AI generation and audit workflow for NFT contest entry.</p>
+            </div>
+        </div>
+        <div class="contest-card">
+            <span class="contest-num">05</span>
+            <div class="contest-info">
+                <h3>Noorung — Meme Contest (ETH)</h3>
+                <p>Entered Noorung's Ethereum meme contest with a full AI-generated creative pipeline from brief to caption.</p>
+            </div>
+        </div>
+        <div class="contest-card">
+            <span class="contest-num">06+</span>
+            <div class="contest-info">
+                <h3>500+ Total Contest Entries</h3>
+                <p>Over 3 years, 500+ entries across thread, meme, graphic, and video contests — across chains and ecosystems.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+    <p class="section-tag">Contact</p>
+    <h2 class="section-title">Let's Build Together</h2>
+    <p class="contact-sub">Open to Brand Ambassador, Community Manager, and Web3 Growth roles. DMs open on X.</p>
+    <div class="contact-links">
+        <a href="https://x.com/vanta_xbt" target="_blank" class="btn-primary">↗ DM @vanta_xbt</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <span class="footer-logo">VANTA</span>
+    <span class="footer-copy">© 2026 VANTA · Web3 Growth & Community</span>
+</footer>
+
+</body>
+              </html>
