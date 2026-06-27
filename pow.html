@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VANTA — Web3 Proof of Work</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #0A0809;
+            --card: #161414;
+            --gold: #C9A227;
+            --gold-light: #E2B93B;
+            --white: #F5F0E8;
+            --muted: #888480;
+            --border: rgba(201, 162, 39, 0.25);
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: 'Space Grotesk', sans-serif;
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 14mm 16mm;
+            line-height: 1.5;
+            font-size: 13px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 18px;
+        }
+        .header-left h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        .header-left h1 span { color: var(--gold); }
+        .header-left p {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+        .header-right {
+            text-align: right;
+            padding-top: 6px;
+        }
+        .header-right a {
+            display: block;
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--gold);
+            text-decoration: none;
+            margin-bottom: 4px;
+        }
+        .header-right span {
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+
+        /* STATS ROW */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            margin-bottom: 18px;
+        }
+        .stat {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 12px 14px;
+            text-align: center;
+        }
+        .stat-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 9px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* SECTION */
+        .section { margin-bottom: 18px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .section-header span {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            color: var(--gold);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* EXPERIENCE */
+        .exp-grid { display: grid; gap: 2px; }
+        .exp-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-left: 2px solid var(--gold);
+            padding: 10px 14px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+        }
+        .exp-project {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        .exp-role {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 5px;
+        }
+        .exp-desc {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+        .exp-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .tag {
+            padding: 2px 7px;
+            border: 1px solid var(--border);
+            font-size: 8px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .exp-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* TWO COLUMN */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* SKILLS */
+        .skills-list { display: grid; gap: 2px; }
+        .skill-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .skill-icon { font-size: 13px; line-height: 1.4; }
+        .skill-title { font-size: 11px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+        .skill-desc { font-size: 10px; color: var(--muted); line-height: 1.5; }
+
+        /* CONTEST */
+        .contest-list { display: grid; gap: 2px; }
+        .contest-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .contest-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: rgba(201, 162, 39, 0.3);
+            min-width: 28px;
+            line-height: 1.2;
+        }
+        .contest-title { font-size: 11px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+        .contest-desc { font-size: 10px; color: var(--muted); line-height: 1.5; }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+        }
+        .footer-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            color: var(--gold);
+            letter-spacing: 4px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        .footer-links a {
+            font-size: 10px;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .footer-copy { font-size: 10px; color: var(--muted); }
+
+        /* PRINT */
+        @media print {
+            body {
+                width: 210mm;
+                padding: 12mm 14mm;
+                background: var(--black) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            @page {
+                size: A4;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-left">
+        <h1>VAN<span>TA</span></h1>
+        <p>Brand Ambassador · Community Manager · Web3 Growth</p>
+    </div>
+    <div class="header-right">
+        <a href="https://x.com/vanta_xbt">x.com/vanta_xbt</a>
+        <a href="https://vantaxbt.netlify.app">vantaxbt.netlify.app</a>
+        <span>Lagos, Nigeria · Web3</span>
+    </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+    <div class="stat">
+        <span class="stat-num">3+</span>
+        <span class="stat-label">Years Active</span>
+    </div>
+    <div class="stat">
+        <span class="stat-num">500+</span>
+        <span class="stat-label">Contest Entries</span>
+    </div>
+    <div class="stat">
+        <span class="stat-num">$4M+</span>
+        <span class="stat-label">Market Cap Driven</span>
+    </div>
+    <div class="stat">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">Projects Represented</span>
+    </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="section">
+    <div class="section-header"><span>Experience</span></div>
+    <div class="exp-grid">
+
+        <div class="exp-item">
+            <div>
+                <p class="exp-project">BlackDuck RWA · $BD</p>
+                <h3 class="exp-role">Brand Ambassador</h3>
+                <p class="exp-desc">Drove $BD token to a $4M+ market cap through sustained X campaigns, Spaces activations, and community engagement. Appointed after winning multiple internal meme and thread contests. Built narrative momentum around the RWA thesis and broadened BlackDuck's reach across Web3.</p>
+                <div class="exp-tags">
+                    <span class="tag">RWA</span>
+                    <span class="tag">X Spaces</span>
+                    <span class="tag">Thread Writing</span>
+                    <span class="tag">Meme Direction</span>
+                    <span class="tag">Token Growth</span>
+                </div>
+            </div>
+            <span class="exp-date">Current</span>
+        </div>
+
+        <div class="exp-item">
+            <div>
+                <p class="exp-project">Alpha Hut</p>
+                <h3 class="exp-role">Community Manager & Collab Manager</h3>
+                <p class="exp-desc">Managed a 1,000+ member community — day-to-day operations, whitelist distribution, moderation, and inter-project collab brokering with external Web3 teams.</p>
+                <div class="exp-tags">
+                    <span class="tag">Community Ops</span>
+                    <span class="tag">Whitelist Mgmt</span>
+                    <span class="tag">Collab Brokering</span>
+                    <span class="tag">Moderation</span>
+                </div>
+            </div>
+            <span class="exp-date">Past</span>
+        </div>
+
+        <div class="exp-item">
+            <div>
+                <p class="exp-project">FFG Coin · Mace_gg · Astrena AI · Others</p>
+                <h3 class="exp-role">Brand Ambassador (Multiple Projects)</h3>
+                <p class="exp-desc">Represented projects across memecoin, gaming, and AI verticals — handling social presence, community growth, and campaign execution. Won FFG thread contest; ambassador role followed.</p>
+                <div class="exp-tags">
+                    <span class="tag">Memecoin</span>
+                    <span class="tag">Gaming</span>
+                    <span class="tag">AI Projects</span>
+                    <span class="tag">Content Strategy</span>
+                </div>
+            </div>
+            <span class="exp-date">Past</span>
+        </div>
+
+    </div>
+</div>
+
+<!-- TWO COLUMN: SKILLS + CONTESTS -->
+<div class="two-col">
+
+    <!-- SKILLS -->
+    <div class="section">
+        <div class="section-header"><span>Capabilities</span></div>
+        <div class="skills-list">
+            <div class="skill-item">
+                <span class="skill-icon">📣</span>
+                <div>
+                    <p class="skill-title">Brand Ambassadorship</p>
+                    <p class="skill-desc">X Spaces hosting, thread campaigns, narrative framing for token growth.</p>
+                </div>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">🏗️</span>
+                <div>
+                    <p class="skill-title">Community Building</p>
+                    <p class="skill-desc">Moderation, whitelist ops, retention, and collab brokering at scale.</p>
+                </div>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">✍️</span>
+                <div>
+                    <p class="skill-title">Thread & Content Writing</p>
+                    <p class="skill-desc">Contest-winning threads and marketing copy built to convert.</p>
+                </div>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">🎨</span>
+                <div>
+                    <p class="skill-title">Meme & Creative Direction</p>
+                    <p class="skill-desc">Graphic cards, meme concepts, video prompts — minimal text, high impact.</p>
+                </div>
+            </div>
+            <div class="skill-item">
+                <span class="skill-icon">🌍</span>
+                <div>
+                    <p class="skill-title">MENA & Africa Reach</p>
+                    <p class="skill-desc">Arabic proficiency + Lagos network for high-growth regional markets.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRACK RECORD -->
+    <div class="section">
+        <div class="section-header"><span>Track Record</span></div>
+        <div class="contest-list">
+            <div class="contest-item">
+                <span class="contest-num">01</span>
+                <div>
+                    <p class="contest-title">BlackDuck RWA — Multiple Wins</p>
+                    <p class="contest-desc">Won multiple meme + thread contests. Led to ambassador appointment.</p>
+                </div>
+            </div>
+            <div class="contest-item">
+                <span class="contest-num">02</span>
+                <div>
+                    <p class="contest-title">FFG Coin — Thread Contest Win</p>
+                    <p class="contest-desc">Winning thread entry. Secured ambassador role directly from win.</p>
+                </div>
+            </div>
+            <div class="contest-item">
+                <span class="contest-num">03</span>
+                <div>
+                    <p class="contest-title">$RANDO — Solana Memecoin Contest</p>
+                    <p class="contest-desc">9-tweet thread, custom graphic cards + original video meme concept.</p>
+                </div>
+            </div>
+            <div class="contest-item">
+                <span class="contest-num">04</span>
+                <div>
+                    <p class="contest-title">Hero of Valdir — NFT Contest</p>
+                    <p class="contest-desc">Full character brief with AI generation pipeline and audit workflow.</p>
+                </div>
+            </div>
+            <div class="contest-item">
+                <span class="contest-num">05</span>
+                <div>
+                    <p class="contest-title">Noorung — ETH Meme Contest</p>
+                    <p class="contest-desc">End-to-end AI creative pipeline: brief → generate → audit → caption.</p>
+                </div>
+            </div>
+            <div class="contest-item">
+                <span class="contest-num">06+</span>
+                <div>
+                    <p class="contest-title">500+ Total Entries · 3 Years</p>
+                    <p class="contest-desc">Thread, meme, graphic + video contests across chains and ecosystems.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <span class="footer-logo">VANTA</span>
+    <div class="footer-links">
+        <a href="https://x.com/vanta_xbt">x.com/vanta_xbt</a>
+        <a href="https://vantaxbt.netlify.app">vantaxbt.netlify.app</a>
+    </div>
+    <span class="footer-copy">© 2026 VANTA</span>
+</div>
+
+</body>
+              </html>
